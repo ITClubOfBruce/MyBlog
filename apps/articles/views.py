@@ -60,7 +60,6 @@ def about(request):
 
 def search(request):
     keyword = request.GET.get('keyword')
-    print(keyword)
     if not keyword:
         error_msg = "请输入关键字"
         return render(request,'index.html',locals())
@@ -80,10 +79,4 @@ def search(request):
     categories = Category.objects.all()
     # 获取所有的标签
     tags = Tag.objects.all()
-    # context = {
-    #     "articles":articles,
-    #     "lastest_articles":lastest_articles,
-    #     "categories":categories,
-    #     "tags":tags
-    # }
     return render(request,'index.html',locals())
