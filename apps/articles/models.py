@@ -25,7 +25,7 @@ class Tag(models.Model):
 class Articles(models.Model):
     title = models.CharField(max_length=128,verbose_name="文章标题")
     author = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="文章作者")
-    img = models.ImageField(upload_to="",blank=True,null=True,verbose_name="文章配图")
+    img = models.ImageField(upload_to="%Y%m%d%H%M%S/",blank=True,null=True,verbose_name="文章配图")
     abstract = models.TextField(verbose_name="文章摘要")
     content = models.TextField(verbose_name="文章内容")
     category = models.ManyToManyField(Category,verbose_name="文章分类")

@@ -2,12 +2,14 @@ from django.shortcuts import render
 from .models import Articles,Category,Tag
 from django.core.paginator import Paginator
 from django.db.models import Q
-
+from django.contrib.auth.decorators import login_required
 # FBV     function based view  基于函数的视图
 
-
+@login_required
 def index(request):
     articles = Articles.objects.all()
+    # 获取最新的5篇文章
+    lastest_articles = articles[:5]
     limited = 2
     p = Paginator(articles,limited)
     # 得到前端传过来的page参数
@@ -17,8 +19,7 @@ def index(request):
         page = 1
     
     articles = p.get_page(page)
-    # 获取最新的5篇文章
-    lastest_articles = articles[:5]
+    
     # 获取所有的分类
     categories = Category.objects.all()
     # 获取所有的标签
@@ -64,6 +65,8 @@ def search(request):
         error_msg = "请输入关键字"
         return render(request,'index.html',locals())
     articles = Articles.objects.filter(Q(title__icontains = keyword)|Q(abstract__icontains = keyword)|Q(content__icontains=keyword))
+    # 获取最新的5篇文章
+    lastest_articles = articles[:5]
     limited = 2
     p = Paginator(articles,limited)
     # 得到前端传过来的page参数
@@ -73,10 +76,52 @@ def search(request):
         page = 1
     
     articles = p.get_page(page)
-    # 获取最新的5篇文章
-    lastest_articles = articles[:5]
+    
     # 获取所有的分类
     categories = Category.objects.all()
     # 获取所有的标签
     tags = Tag.objects.all()
     return render(request,'index.html',locals())
+
+
+def tag(request,id):
+    tag = Tag.objects.get(id=id)
+    articles = Articles.objects.filter(tag=tag)
+    lastest_articles = articles[:5]
+    limited = 2
+    p = Paginator(articles,limited)
+    # 得到前端传过来的page参数
+    try:
+        page = request.GET.get('page',1)
+    except PageNotFound:
+        page = 1
+    
+    articles = p.get_page(page)
+    
+    # 获取所有的分类
+    categories = Category.objects.all()
+    # 获取所有的标签
+    tags = Tag.objects.all()
+    return render(request,"index.html",locals())
+
+def category(request,id):
+    category = Category.objects.get(id=id)
+    articles = Articles.objects.filter(category=category)
+    lastest_articles = articles[:5]
+    limited = 2
+    p = Paginator(articles,limited)
+    # 得到前端传过来的page参数
+    try:
+        page = request.GET.get('page',1)
+    except PageNotFound:
+        page = 1
+    
+    articles = p.get_page(page)
+    
+    # 获取所有的分类
+    categories = Category.objects.all()
+    # 获取所有的标签
+    tags = Tag.objects.all()
+    return render(request,"index.html",locals())
+
+

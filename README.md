@@ -72,9 +72,24 @@ import sys
 sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
 
 
-## 七、评论和集成markdownfy插件
+## 七、评论和集成markdownx插件
 django-contrib-comments
-django-markdownfy    
+django-markdownx   
+
+
+## 八、配置media路径
+
+```python
+# settings.py
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+
+# urls.py
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+```
 
 
 
