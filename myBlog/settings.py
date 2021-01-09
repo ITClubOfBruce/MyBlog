@@ -19,6 +19,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -123,3 +124,14 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
+
+
+LOGIN_REDIRECT_URL = '/article/index'  # 登录成功之后的跳转页面
+SIMPLE_BACKEND_REDIRECT_URL = '/accounts/login/'  # 注册成功之后直接跳转到登录页面
+
+
+
+
+
+
+
