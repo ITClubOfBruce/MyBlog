@@ -93,14 +93,26 @@ urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 ## 九、快速注册账号，使用第三方框架：django-registration-redux
 
-1. 一阶段注册，用户注册后立即激活并登录。
+1. 允许注册：安装 registration
+   pip install django-registration-redux
+2. 添加到 apps 中 
+   ```
+   INSTALLED_APPS = [
+       'django.contrib.sites',
+       'registration', #should be immediately above 'django.contrib.admin'
+       'django.contrib.admin',
+       # ...other installed applications...
+   ]
+   ```
+3. 同步数据库
+ 一阶段注册，用户注册后立即激活并登录。
    `path('accounts/', include('registration.backends.simple.urls')),`
-2. 分两个阶段进行的注册，包括初始注册和确认电子邮件，以及有关激活新帐户的说明。
+4. 分两个阶段进行的注册，包括初始注册和确认电子邮件，以及有关激活新帐户的说明。
    `path('accounts/', include('registration.backends.default.urls')),`
-3. 用户进行注册的三阶段注册通过电子邮件确认其帐户，然后管理员批准该帐户以允许用户登录。
+5. 用户进行注册的三阶段注册通过电子邮件确认其帐户，然后管理员批准该帐户以允许用户登录。
    `path('accounts/', include('registration.backends.admin_approval.urls')),`
 
-4. 同步数据库后，拥有这些接口
+6. 同步数据库后，拥有这些接口
    accounts/login
    accounts/register
    accounts/logout
